@@ -1,1 +1,2 @@
-# DeniseAC94.github.io
+# Denise Crampton website
+Static website for GitHub Pages or Netlify.
