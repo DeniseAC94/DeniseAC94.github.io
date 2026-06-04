@@ -182,11 +182,12 @@ margin:0 0 16px;
 .lead{
 max-width:850px;
 font-size:1.22rem;
-color:rgba(255,250,242,.88);
+color:#303b3a;
 }
 
-main .lead{
-color:#303b3a;
+.hero .lead,
+.hero p{
+color:rgba(255,250,242,.88);
 }
 
 .muted{
@@ -234,6 +235,7 @@ border-color:#fffaf2;
 }
 
 /* Buttons outside hero */
+
 main .btn.alt,
 .footer .btn.alt{
 color:var(--deep-2);
@@ -445,4 +447,4 @@ gap:10px;
 .btn{
 padding:11px 15px;
 }
-  }
+}
