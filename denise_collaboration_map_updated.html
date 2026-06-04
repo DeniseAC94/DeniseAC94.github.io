@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Global methods support map — Denise Crampton</title>
+  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
+  <style>
+    :root {
+      --bg:#f4efe6; --paper:#fffaf2; --ink:#182223; --muted:#65716f;
+      --deep:#102f32; --teal:#2c7475; --gold:#c78b36; --border:#dfd0bf;
+    }
+    * { box-sizing:border-box; }
+    html, body {
+      margin:0; padding:0; background:var(--bg); color:var(--ink);
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .wrap {
+      width:100%; min-height:100vh; padding:16px;
+      background:
+        radial-gradient(circle at top left, rgba(44,116,117,.12), transparent 28rem),
+        radial-gradient(circle at bottom right, rgba(199,139,54,.12), transparent 32rem),
+        var(--bg);
+    }
+    .panel {
+      max-width:1200px; margin:0 auto; background:rgba(255,250,242,.92);
+      border:1px solid var(--border); border-radius:24px;
+      box-shadow:0 14px 36px rgba(24,34,35,.10); overflow:hidden;
+    }
+    .header { padding:20px 24px 8px; }
+    .kicker {
+      display:inline-block; margin-bottom:8px; padding:5px 10px; border-radius:999px;
+      background:#f1dcc0; color:#744719; font-size:.75rem; font-weight:900;
+      text-transform:uppercase; letter-spacing:.08em;
+    }
+    h1 {
+      margin:0 0 8px; color:var(--deep); font-size:clamp(1.55rem,3vw,2.4rem);
+      line-height:1.1; letter-spacing:-.035em;
+    }
+    p { margin:0; color:var(--muted); line-height:1.55; max-width:900px; }
+    #map { width:100%; height:620px; }
+    .footer { padding:0 24px 20px; color:var(--muted); font-size:.9rem; }
+    @media(max-width:720px){
+      .wrap{padding:8px;} .panel{border-radius:18px;}
+      .header{padding:16px 16px 6px;} #map{height:520px;}
+      .footer{padding:0 16px 16px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div class="header">
+        <span class="kicker">Research network</span>
+        <h1>Global methods support map</h1>
+        <p>
+          Country-level locations linked to recorded morphology methods support, research queries,
+          tutorial correspondence and collaboration activity. Pins are aggregated by country/region rather than
+          precise personal locations.
+        </p>
+      </div>
+      <div id="map"></div>
+      <div class="footer">
+        86 recorded entries across 45 country/region-level locations.
+      </div>
+    </div>
+  </div>
+  <script>
+    const trace = {
+      type: "scattergeo", mode: "markers",
+      lat: [28.0339, -16.2902, -14.235, 35.8617, 4.5709, 49.8175, 52.3555, -17.7134, 61.9241, 46.2276, 51.1657, 20.5937, -0.7893, 32.4279, 31.0461, 41.8719, 36.2048, 35.9078, 4.2105, 31.7917, 9.082, 60.472, 12.8797, 56.4907, 1.3521, -30.5595, 7.8731, 46.8182, 15.87, 38.9637, 55.3781, 37.0902, 14.0583, 52.1307, 28.3949, -35.6751, 51.9194, 33.8547, 23.6978, 30.3753, -25.2744, 23.685, 61.524, -6.369, 40.4637], lon: [1.6596, -63.5887, -51.9253, 104.1954, -74.2973, 15.473, -1.1743, 178.065, 25.7482, 2.2137, 10.4515, 78.9629, 113.9213, 53.688, 34.8516, 12.5674, 138.2529, 127.7669, 101.9758, -7.0926, 8.6753, 8.4689, 121.774, -4.2026, 103.8198, 22.9375, 80.7718, 8.2275, 100.9925, 35.2433, -3.436, -95.7129, 108.2772, -3.7837, 84.124, -71.543, 19.1451, 35.8623, 120.9605, 69.3451, 133.7751, 90.3563, 105.3188, 34.8888, -3.7492],
+      text: ["<b>Algeria</b><br>Recorded entries: 2<br>Country/region-level location", "<b>Bolivia</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Brazil</b><br>Recorded entries: 2<br>Country/region-level location", "<b>China</b><br>Recorded entries: 4<br>Country/region-level location", "<b>Colombia</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Czechia</b><br>Recorded entries: 1<br>Country/region-level location", "<b>England</b><br>Recorded entries: 3<br>Country/region-level location", "<b>Fiji</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Finland</b><br>Recorded entries: 1<br>Country/region-level location", "<b>France</b><br>Recorded entries: 2<br>Country/region-level location", "<b>Germany</b><br>Recorded entries: 2<br>Country/region-level location", "<b>India</b><br>Recorded entries: 7<br>Country/region-level location", "<b>Indonesia</b><br>Recorded entries: 5<br>Country/region-level location", "<b>Iran</b><br>Recorded entries: 6<br>Country/region-level location", "<b>Israel</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Italy</b><br>Recorded entries: 3<br>Country/region-level location", "<b>Japan</b><br>Recorded entries: 2<br>Country/region-level location", "<b>South Korea</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Malaysia</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Morocco</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Nigeria</b><br>Recorded entries: 2<br>Country/region-level location", "<b>Norway</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Philippines</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Scotland</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Singapore</b><br>Recorded entries: 1<br>Country/region-level location", "<b>South Africa</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Sri Lanka</b><br>Recorded entries: 2<br>Country/region-level location", "<b>Switzerland</b><br>Recorded entries: 2<br>Country/region-level location", "<b>Thailand</b><br>Recorded entries: 1<br>Country/region-level location", "<b>T\u00fcrkiye</b><br>Recorded entries: 6<br>Country/region-level location", "<b>United Kingdom</b><br>Recorded entries: 1<br>Country/region-level location", "<b>USA</b><br>Recorded entries: 5<br>Country/region-level location", "<b>Vietnam</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Wales</b><br>Recorded entries: 3<br>Country/region-level location", "<b>Nepal</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Chile</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Poland</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Lebanon</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Taiwan</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Pakistan</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Australia</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Bangladesh</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Russia</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Tanzania</b><br>Recorded entries: 1<br>Country/region-level location", "<b>Spain</b><br>Recorded entries: 1<br>Country/region-level location"], hovertemplate: "%{text}<extra></extra>",
+      marker: {
+        size: [23.204355391591907, 18.71162569793112, 23.204355391591907, 30.014060217126747, 18.71162569793112, 18.71162569793112, 26.841158381406576, 18.71162569793112, 18.71162569793112, 23.204355391591907, 23.204355391591907, 38.0, 32.881327117174465, 35.526422757923385, 18.71162569793112, 26.841158381406576, 23.204355391591907, 18.71162569793112, 18.71162569793112, 18.71162569793112, 23.204355391591907, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 23.204355391591907, 23.204355391591907, 18.71162569793112, 35.526422757923385, 18.71162569793112, 32.881327117174465, 18.71162569793112, 26.841158381406576, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112, 18.71162569793112], color: [2, 1, 2, 4, 1, 1, 3, 1, 1, 2, 2, 7, 5, 6, 1, 3, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 2, 1, 6, 1, 5, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        colorscale: [[0, "#2c7475"], [0.55, "#c78b36"], [1, "#8b5140"]],
+        cmin: 1, cmax: 7, opacity: 0.84,
+        line: { color: "#fffaf2", width: 1.7 },
+        colorbar: {
+          title: "Entries", thickness: 14, len: 0.58,
+          bgcolor: "rgba(255,250,242,.75)", outlinecolor: "#dfd0bf"
+        }
+      }
+    };
+    const labelTrace = {
+      type: "scattergeo", mode: "text",
+      lat: [28.0339, -16.2902, -14.235, 35.8617, 4.5709, 49.8175, 52.3555, -17.7134, 61.9241, 46.2276, 51.1657, 20.5937, -0.7893, 32.4279, 31.0461, 41.8719, 36.2048, 35.9078, 4.2105, 31.7917, 9.082, 60.472, 12.8797, 56.4907, 1.3521, -30.5595, 7.8731, 46.8182, 15.87, 38.9637, 55.3781, 37.0902, 14.0583, 52.1307, 28.3949, -35.6751, 51.9194, 33.8547, 23.6978, 30.3753, -25.2744, 23.685, 61.524, -6.369, 40.4637], lon: [1.6596, -63.5887, -51.9253, 104.1954, -74.2973, 15.473, -1.1743, 178.065, 25.7482, 2.2137, 10.4515, 78.9629, 113.9213, 53.688, 34.8516, 12.5674, 138.2529, 127.7669, 101.9758, -7.0926, 8.6753, 8.4689, 121.774, -4.2026, 103.8198, 22.9375, 80.7718, 8.2275, 100.9925, 35.2433, -3.436, -95.7129, 108.2772, -3.7837, 84.124, -71.543, 19.1451, 35.8623, 120.9605, 69.3451, 133.7751, 90.3563, 105.3188, 34.8888, -3.7492],
+      text: ["", "", "", "4", "", "", "3", "", "", "", "", "7", "5", "6", "", "3", "", "", "", "", "", "", "", "", "", "", "", "", "", "6", "", "5", "", "3", "", "", "", "", "", "", "", "", "", "", ""], hoverinfo: "skip",
+      textfont: { color: "#fffaf2", size: 11, family: "Inter, Arial, sans-serif" }
+    };
+    const layout = {
+      margin: {l:0, r:0, t:0, b:0},
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(0,0,0,0)",
+      geo: {
+        projection: {type: "natural earth"},
+        showland: true, landcolor: "#dbe7df",
+        showocean: true, oceancolor: "#f4efe6",
+        showcountries: true, countrycolor: "#fffaf2", countrywidth: 0.65,
+        showcoastlines: true, coastlinecolor: "#fffaf2", coastlinewidth: 0.5,
+        lataxis: {range: [-58, 82]},
+        bgcolor: "rgba(0,0,0,0)"
+      },
+      showlegend: false
+    };
+    const config = {
+      responsive: true, displayModeBar: true,
+      modeBarButtonsToRemove: ["lasso2d", "select2d"],
+      displaylogo: false
+    };
+    Plotly.newPlot("map", [trace, labelTrace], layout, config);
+  </script>
+</body>
+</html>
